@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101819">
+  <title>Gesture Studio | 手势绘画实验</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">✳</span><div><strong>GESTURE STUDIO</strong><small>MediaPipe 手势绘画实验</small></div></div>
+      <div class="top-actions">
+        <span id="status" class="status" role="status"><i></i><span>鼠标模式</span></span>
+        <button id="cameraButton" class="button camera-button" type="button" aria-pressed="false"><span class="button-icon">◉</span><span>开启摄像头</span></button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="panel" aria-label="绘画工具">
+        <div class="panel-section">
+          <div class="section-label">模式</div>
+          <div class="segmented" role="group" aria-label="绘画模式">
+            <button class="segment active" type="button" data-mode="ink" aria-pressed="true">墨迹</button>
+            <button class="segment" type="button" data-mode="spark" aria-pressed="false">流光</button>
+          </div>
+        </div>
+        <div class="panel-section">
+          <div class="section-label">色彩</div>
+          <div id="colors" class="swatches" role="group" aria-label="画笔颜色">
+            <button class="swatch selected" type="button" data-color="#76f0cf" style="--swatch:#76f0cf" aria-label="薄荷绿" aria-pressed="true"></button>
+            <button class="swatch" type="button" data-color="#f3bc71" style="--swatch:#f3bc71" aria-label="琥珀黄" aria-pressed="false"></button>
+            <button class="swatch" type="button" data-color="#f7849b" style="--swatch:#f7849b" aria-label="珊瑚粉" aria-pressed="false"></button>
+            <button class="swatch" type="button" data-color="#9bbcff" style="--swatch:#9bbcff" aria-label="浅蓝" aria-pressed="false"></button>
+            <button class="swatch" type="button" data-color="#f5f6f0" style="--swatch:#f5f6f0" aria-label="暖白" aria-pressed="false"></button>
+          </div>
+        </div>
+        <div class="panel-section">
+          <label class="section-label slider-label" for="size"><span>笔触粗细</span><output id="sizeValue" for="size">8</output></label>
+          <input id="size" type="range" min="2" max="28" value="8">
+        </div>
+        <div class="panel-section grow">
+          <div class="section-label">画布</div>
+          <div class="command-stack">
+            <button id="undoButton" class="button command" type="button" title="撤销" aria-label="撤销" disabled><span class="command-icon">↶</span><span>撤销</span></button>
+            <button id="clearButton" class="button command" type="button" title="清空画布" aria-label="清空画布"><span class="command-icon">⌫</span><span>清空</span></button>
+            <button id="saveButton" class="button command" type="button" title="导出 PNG" aria-label="导出 PNG"><span class="command-icon">⇩</span><span>导出 PNG</span></button>
+          </div>
+        </div>
+        <div class="panel-footer"><span class="signal-dot"></span><span id="inputLabel">鼠标 / 触控输入</span></div>
+      </aside>
+
+      <section class="stage" aria-label="交互画布">
+        <canvas id="artCanvas" aria-label="绘画画布"></canvas>
+        <canvas id="fxCanvas" aria-hidden="true"></canvas>
+        <div id="emptyState" class="empty-state" aria-hidden="true"><div class="empty-glyph">✳</div><h1>让动作留下痕迹</h1><p>拖动鼠标或触摸画布开始创作</p></div>
+        <div class="stage-top"><span class="stage-tag">LIVE CANVAS</span><span id="gestureLabel" class="gesture-label">等待输入</span></div>
+        <div id="cursor" class="cursor" aria-hidden="true"></div>
+        <div id="cameraPreview" class="camera-preview" hidden><video id="video" autoplay playsinline muted></video><canvas id="overlay" aria-hidden="true"></canvas><span class="preview-label">HAND TRACKING</span></div>
+        <div class="stage-bottom"><span id="hint">按住鼠标绘画 · 摄像头模式下捏合拇指与食指绘画</span><span id="strokeCount">0 笔</span></div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
